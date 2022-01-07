@@ -59,9 +59,11 @@ fn main() {
     let mut listing = Listing::from_file(db_file).unwrap();
 
     let nb_maps = listing.beatmaps.len();
-    let mut i = 1;
+    let mut i = 0;
 
     for beatmap in listing.beatmaps.iter_mut() {
+        i = i + 1;
+
         let map_name = beatmap.title_ascii.as_ref().unwrap();
         println!("Processing beatmap {}/{} ({})", i, nb_maps, map_name);
 
@@ -80,7 +82,7 @@ fn main() {
         let nm_pp = OsuPP::new(&map).calculate();
         let dt_pp = OsuPP::new(&map).mods(1<<6).calculate();
 
-        insert.bind(&[
+        match insert.bind(&[
             Integer(beatmap.beatmap_id as i64),
             Integer(beatmap.beatmapset_id as i64),
             VString(map_name.to_string()),
@@ -98,10 +100,16 @@ fn main() {
             Float(dt_pp.pp_speed),
             Float(dt_pp.pp_acc),
             Float(dt_pp.pp)
-        ]).unwrap();
+        ]) {
+            Ok(_) => {},
+            Err(e) => {
+                // Some maps have duplicate ID, just ignore when that happens.
+                println!("Failed to insert map into database: {}", e);
+                continue;
+            }
+        };
 
-        insert.next().unwrap();
-        i = i + 1;
+        _ = insert.next();
     }
 
     connection.execute("COMMIT TRANSACTION").unwrap();
