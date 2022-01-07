@@ -63,14 +63,15 @@ fn main() {
 
     for beatmap in listing.beatmaps.iter_mut() {
         i = i + 1;
+        if beatmap.mode != osu_db::Mode::Standard {
+            continue;
+        }
 
         let map_name = beatmap.title_ascii.as_ref().unwrap();
-        println!("Processing beatmap {}/{} ({})", i, nb_maps, map_name);
-
         let map_folder = beatmap.folder_name.as_ref().unwrap();
         let map_filename = beatmap.file_name.as_ref().unwrap();
 
-
+        println!("Processing beatmap {}/{} ({})", i, nb_maps, map_folder);
         let map = match Beatmap::from_path(songs_directory.join(map_folder).join(map_filename)) {
             Ok(val) => val,
             Err(e) => {
