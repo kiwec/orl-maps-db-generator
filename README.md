@@ -8,5 +8,5 @@ You should have ~117k beatmaps in osu! before running this. There are torrents a
 
 ```
 git clone https://github.com/kiwec/orl-maps-db-generator && cd orl-maps-db-generator
-cargo run <game directory>
+cargo run --release <game directory>
 ```

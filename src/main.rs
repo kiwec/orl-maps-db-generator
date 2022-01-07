@@ -67,7 +67,16 @@ fn main() {
 
         let map_folder = beatmap.folder_name.as_ref().unwrap();
         let map_filename = beatmap.file_name.as_ref().unwrap();
-        let map = Beatmap::from_path(songs_directory.join(map_folder).join(map_filename)).unwrap();
+
+
+        let map = match Beatmap::from_path(songs_directory.join(map_folder).join(map_filename)) {
+            Ok(val) => val,
+            Err(e) => {
+                println!("Skipped map due to error: {}", e);
+                continue;
+            }
+        };
+
         let nm_pp = OsuPP::new(&map).calculate();
         let dt_pp = OsuPP::new(&map).mods(1<<6).calculate();
 
