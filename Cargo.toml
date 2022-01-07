@@ -1,0 +1,9 @@
+[package]
+name = "maps-db-generator"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+osu-db = "0.2"
+rosu-pp = {version = "0.4.0", features = ["osu"]}
+sqlite = "0.24.0"
