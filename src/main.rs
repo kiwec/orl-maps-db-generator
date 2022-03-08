@@ -10,7 +10,7 @@ fn main() {
     let game_directory = Path::new(&args[1]);
     let songs_directory = game_directory.join("Songs");
 
-    let connection = sqlite::open("maps.db").unwrap();
+    let connection = sqlite::open("ranks.db").unwrap();
     connection.execute(
         "CREATE TABLE map (
             id INTEGER PRIMARY KEY,

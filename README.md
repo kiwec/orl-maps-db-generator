@@ -1,6 +1,6 @@
-# maps.db generator
+# ranks.db initializer
 
-This tool is used to generate a `maps.db` file for [osu! ranked lobbies](https://github.com/kiwec/osu-ranked-lobbies).
+This tool initializes the "maps" table of an [osu! ranked lobbies](https://github.com/kiwec/osu-ranked-lobbies) database.
 
 You should have ~117k beatmaps in osu! before running this. There are torrents available to get you started if you don't have them yet.
 
